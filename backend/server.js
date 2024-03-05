@@ -15,6 +15,10 @@ app.use((req, res, next) => {
   next()
 })
 
+app.get("/", (req, res) => {
+  return res.json({ hello: "world" })
+})
+
 // Routes
 app.use("/api/workouts", workoutRoutes)
 
@@ -24,7 +28,7 @@ mongoose
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log("Connected to the database.")
-      console.log(`Listening on port ${process.env.PORT}!`)
+      console.log(`Listening on port http://localhost:${process.env.PORT}`)
     })
   })
   .catch((error) => {
