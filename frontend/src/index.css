@@ -61,10 +61,14 @@ header a {
   top: 20px;
   right: 20px;
   cursor: pointer;
-  background: #f1f1f1;
-  padding: 6px;
-  border-radius: 50%;
-  color: #333;
+  background: #e7195a;
+  padding: 8px;
+  border-radius: 10%;
+  color: white;
+  font-size: 15px;
+}
+.workout-details span:active {
+  background: #e7195ad4;
 }
 
 /* new workout form */
@@ -97,4 +101,8 @@ div.error {
   color: var(--error);
   border-radius: 4px;
   margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid var(--error);
 }

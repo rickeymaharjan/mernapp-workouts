@@ -8,6 +8,7 @@ const WorkoutForm = () => {
   const [reps, setReps] = useState("")
   const [load, setLoad] = useState("")
   const [error, setError] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -22,11 +23,14 @@ const WorkoutForm = () => {
         setReps("")
         setLoad("")
         setError(null)
+        setEmptyFields([])
         dispatch({ type: "CREATE_WORKOUT", payload: data })
       })
       .catch((error) => {
+        console.log(error)
         if (error.response) {
-          setError(error.response.data.message || "Server error")
+          setError(error.response.data.error || "Server error")
+          setEmptyFields(error.response.data.emptyFields)
         } else {
           setError("Network error: Unable to reach the server")
         }
@@ -42,6 +46,7 @@ const WorkoutForm = () => {
         type="text"
         onChange={(event) => setTitle(event.target.value)}
         value={title}
+        className={emptyFields.includes("title") ? "error" : ""}
       />
 
       <label>Load (in kg): </label>
@@ -49,6 +54,7 @@ const WorkoutForm = () => {
         type="number"
         onChange={(event) => setLoad(event.target.value)}
         value={load}
+        className={emptyFields.includes("load") ? "error" : ""}
       />
 
       <label>Reps: </label>
@@ -56,6 +62,7 @@ const WorkoutForm = () => {
         type="number"
         onChange={(event) => setReps(event.target.value)}
         value={reps}
+        className={emptyFields.includes("reps") ? "error" : ""}
       />
 
       <button>Add Workout</button>
