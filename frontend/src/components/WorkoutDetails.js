@@ -3,10 +3,26 @@ import workoutServices from "../services/data"
 
 import formatDistanceToNow from "date-fns/formatDistanceToNow"
 
-const WorkoutDetails = ({ workout }) => {
+import { useAnimate, usePresence } from "framer-motion"
+import { useEffect } from "react"
+
+const WorkoutDetails = ({ workout, index }) => {
   const { dispatch } = useWorkoutsContext()
+  const [scope, animate] = useAnimate()
+  const [isPresent, safeToRemove] = usePresence()
+
+  useEffect(() => {
+    if (isPresent) {
+      animate(
+        scope.current,
+        { opacity: [0, 1] },
+        { duration: 0.4, delay: 0.2 * index }
+      )
+    }
+  }, [])
 
   const handleClick = () => {
+    animate(scope.current, { opacity: [1, 0] }, { duration: 0.1 })
     workoutServices.remove(workout.id).then((data) => {
       console.log("Workout removed", data)
       dispatch({ type: "DELETE_WORKOUT", payload: data })
@@ -14,7 +30,7 @@ const WorkoutDetails = ({ workout }) => {
   }
 
   return (
-    <div className="workout-details">
+    <div ref={scope} className="workout-details">
       <h4>{workout.title}</h4>
       <p>
         <strong>Load (kg): </strong>

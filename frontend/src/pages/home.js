@@ -17,8 +17,8 @@ const Home = () => {
     <div className="home">
       <div className="workouts">
         {workouts &&
-          workouts.map((workout) => (
-            <WorkoutDetails key={workout.id} workout={workout} />
+          workouts.map((workout, index) => (
+            <WorkoutDetails key={workout.id} workout={workout} index={index} />
           ))}
       </div>
       <div>
