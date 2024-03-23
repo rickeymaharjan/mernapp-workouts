@@ -22,7 +22,7 @@ const WorkoutDetails = ({ workout, index }) => {
   }, [])
 
   const handleClick = () => {
-    animate(scope.current, { opacity: [1, 0] }, { duration: 0.1 })
+    animate(scope.current, { opacity: [1, 0] }, { duration: 0.2 })
     workoutServices.remove(workout.id).then((data) => {
       console.log("Workout removed", data)
       dispatch({ type: "DELETE_WORKOUT", payload: data })
